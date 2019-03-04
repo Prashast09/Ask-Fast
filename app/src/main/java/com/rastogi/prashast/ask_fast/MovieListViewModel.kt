@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast.ui.movielist
+package com.rastogi.prashast.ask_fast
 
 import android.arch.lifecycle.ViewModel
 

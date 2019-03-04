@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast.ui.movielist
+package com.rastogi.prashast.ask_fast
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.rastogi.prashast.ask_fast.R
 
 class MovieListFragment : Fragment() {
 

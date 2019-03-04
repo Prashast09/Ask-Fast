@@ -2,7 +2,6 @@ package com.rastogi.prashast.ask_fast
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.rastogi.prashast.ask_fast.ui.movielist.MovieListFragment
 
 class DashboardActivity : AppCompatActivity() {
 
