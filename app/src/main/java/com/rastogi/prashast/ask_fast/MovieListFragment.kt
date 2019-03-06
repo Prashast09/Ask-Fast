@@ -1,18 +1,17 @@
 package com.rastogi.prashast.ask_fast
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.movie_list_fragment.*
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : androidx.fragment.app.Fragment() {
 
-    private var movieListAdapter: MovieListAdapter? = null
+    private lateinit var movieListAdapter: MovieListAdapter
 
     companion object {
         fun newInstance() = MovieListFragment()
@@ -29,11 +28,31 @@ class MovieListFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(MovieListViewModel::class.java)
 
         initViews()
+        initObservers()
+        fetchNowPlayingMovie()
+
+    }
+
+    private fun initObservers() {
+        viewModel.nowPlayingMovie.observe(this, Observer {
+            if (!::movieListAdapter.isInitialized)
+                movieListAdapter = MovieListAdapter(context,it!!)
+            else {
+                movieListAdapter.setData(it)
+            }
+        })
+    }
+
+    private fun fetchNowPlayingMovie() {
+        viewModel.getNowPlayingMovie()
     }
 
     private fun initViews() {
+        movieListAdapter = MovieListAdapter(context,arrayListOf())
         movie_list_rv.adapter = movieListAdapter
-        movie_list_rv.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        val layoutManager = GridLayoutManager(activity, 3)
+        movie_list_rv.layoutManager =
+                layoutManager
     }
 
 }
