@@ -1,5 +1,6 @@
 package com.rastogi.prashast.ask_fast.config
 
+import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
 
 class Movie {
@@ -13,4 +14,30 @@ class Movie {
 
     @SerializedName("backdrop_path")
     var posterPath: String? = null
+
+    @SerializedName("id")
+    var id: Int? = null
+
+    companion object {
+
+
+        public var DIFF_CALLBACK: DiffUtil.ItemCallback<Movie> = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.equals(newItem)
+            }
+
+        }
+    }
+
+    override fun equals(obj: Any?): Boolean {
+        if (obj === this)
+            return true
+
+        val article = obj as Movie?
+        return article!!.id == this.id
+    }
 }

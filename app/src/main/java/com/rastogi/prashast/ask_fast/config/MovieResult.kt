@@ -7,4 +7,7 @@ class MovieResult {
     @SerializedName("results")
     var movieList: ArrayList<Movie>? = null
 
+    @SerializedName("total_pages")
+    var totalPages: Int? = 0
+
 }

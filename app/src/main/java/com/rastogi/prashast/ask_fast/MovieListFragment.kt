@@ -29,26 +29,17 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
 
         initViews()
         initObservers()
-        fetchNowPlayingMovie()
 
     }
 
     private fun initObservers() {
         viewModel.nowPlayingMovie.observe(this, Observer {
-            if (!::movieListAdapter.isInitialized)
-                movieListAdapter = MovieListAdapter(context,it!!)
-            else {
-                movieListAdapter.setData(it)
-            }
+           movieListAdapter.submitList(it)
         })
     }
 
-    private fun fetchNowPlayingMovie() {
-        viewModel.getNowPlayingMovie()
-    }
-
     private fun initViews() {
-        movieListAdapter = MovieListAdapter(context,arrayListOf())
+        movieListAdapter = MovieListAdapter(context)
         movie_list_rv.adapter = movieListAdapter
         val layoutManager = GridLayoutManager(activity, 3)
         movie_list_rv.layoutManager =

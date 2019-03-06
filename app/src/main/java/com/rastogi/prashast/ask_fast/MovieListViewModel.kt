@@ -1,52 +1,46 @@
 package com.rastogi.prashast.ask_fast
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.rastogi.prashast.ask_fast.config.Movie
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 @SuppressLint("CheckResult")
 
 class MovieListViewModel() : ViewModel() {
 
-    var nowPlayingMovie = MutableLiveData<ArrayList<Movie>>()
+    lateinit var nowPlayingMovie: LiveData<PagedList<Movie>>
     var nowPlayingError = MutableLiveData<Throwable>()
 
-    var popularMovie = MutableLiveData<ArrayList<Movie>>()
+    var popularMovie = MutableLiveData<PagedList<Movie>>()
     var popularMovieError = MutableLiveData<Throwable>()
 
+    private var networkState: LiveData<NetworkState>? = null
+
+
     var movieListRepo: MovieListRepo = MovieListRepo()
-
-    fun getNowPlayingMovie() {
-        movieListRepo.getNowPlayingMovie()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (nowPlayingMovie.value != null) {
-                    val list = nowPlayingMovie.value
-                    list?.addAll(it.movieList!!)
-                    nowPlayingMovie.value = list
-                } else
-                    nowPlayingMovie.value = it.movieList
-            }, {
-                nowPlayingError.value = it
-            })
-    }
+    private var executor: Executor? = null
 
 
-    fun getPopularMovie() {
-        movieListRepo.getPopularMovie()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                val list = popularMovie.value
-                list?.addAll(it.movieList!!)
-                popularMovie.value = list
-            }, {
-                popularMovieError.value = it
-            })
+    init {
+        executor = Executors.newFixedThreadPool(5)
+
+        val feedDataFactory = MovieDataFactory(movieListRepo)
+        networkState = Transformations.switchMap(feedDataFactory.mutableLiveData)
+        { dataSource -> dataSource.networkState }
+
+        val pagedListConfig = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(10)
+            .setPageSize(20).build()
+
+        nowPlayingMovie = LivePagedListBuilder(feedDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
     }
 
 
