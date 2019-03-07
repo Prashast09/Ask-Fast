@@ -36,13 +36,11 @@ class Movie {
     @SerializedName("credits")
     var creditsResponse: CreditsResponse? = null
 
-
-
     companion object {
 
-        public var NOW_PLAYING_MOVIE = "now_playing_movie"
-        public var POPULAR_MOVIE = "popular_movie"
-        public var SEARCH_MOVIE = "search_movie"
+        var NOW_PLAYING_MOVIE = "now_playing_movie"
+        var POPULAR_MOVIE = "popular_movie"
+        var SEARCH_MOVIE = "search_movie"
 
         var DIFF_CALLBACK: DiffUtil.ItemCallback<Movie> = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
@@ -56,11 +54,11 @@ class Movie {
         }
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj === this)
+    override fun equals(other: Any?): Boolean {
+        if (other === this)
             return true
 
-        val article = obj as Movie?
+        val article = other as Movie?
         return article!!.id == this.id
     }
 }

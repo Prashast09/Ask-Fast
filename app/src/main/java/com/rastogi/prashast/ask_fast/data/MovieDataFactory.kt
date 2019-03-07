@@ -11,7 +11,6 @@ class MovieDataFactory(
     private var movieType: String
 ) : DataSource.Factory<Int, Movie>() {
 
-
     val mutableLiveData: MutableLiveData<MovieDataSource> = MutableLiveData()
     private lateinit var movieDataSource: MovieDataSource
     private var query: String = ""
@@ -31,7 +30,7 @@ class MovieDataFactory(
         return movieDataSource
     }
 
-    public fun invalidate() {
+    fun invalidate() {
         movieDataSource.invalidate()
     }
 }

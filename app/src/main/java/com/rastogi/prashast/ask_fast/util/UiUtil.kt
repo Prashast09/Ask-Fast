@@ -13,7 +13,6 @@ object UiUtils {
         val itemIcon = item.icon
         val iconWrapper = DrawableCompat.wrap(itemIcon)
         DrawableCompat.setTint(iconWrapper, context.resources.getColor(color))
-
         item.icon = iconWrapper
     }
 

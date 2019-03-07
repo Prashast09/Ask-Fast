@@ -29,7 +29,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context, movieId: Long) {
-            var intent = Intent(context, MovieDetailActivity::class.java)
+            val intent = Intent(context, MovieDetailActivity::class.java)
             intent.putExtra("movie_id", movieId)
             context.startActivity(intent)
         }
@@ -46,11 +46,9 @@ class MovieDetailActivity : AppCompatActivity() {
         })
 
         setupToolbar()
-
     }
 
     private fun setupToolbar() {
-
         setSupportActionBar(toolbar)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -61,8 +59,8 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun handleCollapsedToolbarTitle() {
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            internal var isShow = true
-            internal var scrollRange = -1
+            var isShow = true
+            var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 if (scrollRange == -1) {
@@ -106,7 +104,6 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setupCastAdapter(creditsResponse: CreditsResponse?) {
-
         list_cast.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         list_cast.adapter = CastAdapter(creditsResponse?.castList!!.take(5))
         ViewCompat.setNestedScrollingEnabled(list_cast, false)

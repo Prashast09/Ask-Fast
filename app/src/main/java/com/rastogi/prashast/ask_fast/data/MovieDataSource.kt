@@ -16,34 +16,17 @@ import io.reactivex.schedulers.Schedulers
 class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var query: String) :
     PageKeyedDataSource<Int, Movie>() {
 
-
     var networkState = MutableLiveData<NetworkState>()
 
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
-        networkState.postValue(
-            NetworkState(
-                "Loading",
-                NetworkState.LOADING
-            )
-        )
+        networkState.postValue(NetworkState("Loading", NetworkState.LOADING))
 
-        val movieList: Single<MovieResult> =
-            when (movieType) {
-                Movie.NOW_PLAYING_MOVIE -> moviesRepo.getNowPlayingMovie(1)
-                SEARCH_MOVIE -> moviesRepo.searchMovie(1, query)
-                else -> moviesRepo.getPopularMovie(1)
-            }
-        movieList.subscribeOn(Schedulers.io())
+        getInitialMovieList().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 callback.onResult(it.movieList!!, null, 2)
-                networkState.postValue(
-                    NetworkState(
-                        "Loaded",
-                        NetworkState.LOADED
-                    )
-                )
+                networkState.postValue(NetworkState("Loaded page 1", NetworkState.LOADED))
             }, {
                 networkState.postValue(
                     NetworkState(
@@ -57,20 +40,9 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState.postValue(
-            NetworkState(
-                "Loading",
-                NetworkState.LOADING
-            )
-        )
+        networkState.postValue(NetworkState("Loading page " + params.key, NetworkState.LOADING))
 
-        val movieList: Single<MovieResult> = when (movieType) {
-            Movie.NOW_PLAYING_MOVIE -> moviesRepo.getNowPlayingMovie(params.key)
-            SEARCH_MOVIE -> moviesRepo.searchMovie(params.key, query)
-            else -> moviesRepo.getPopularMovie(params.key)
-        }
-
-        movieList.subscribeOn(Schedulers.io())
+        getNextPageList(params.key).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 val nextKey = if (params.key == it.totalPages)
@@ -78,6 +50,9 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
                 else
                     params.key + 1
                 callback.onResult(it.movieList!!, nextKey)
+
+                networkState.postValue(NetworkState("Loaded page " + params.key, NetworkState.LOADED))
+
             }, {
                 networkState.postValue(
                     NetworkState(
@@ -90,6 +65,22 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
+    }
+
+    private fun getInitialMovieList(): Single<MovieResult> {
+        return when (movieType) {
+            Movie.NOW_PLAYING_MOVIE -> moviesRepo.getNowPlayingMovie(1)
+            SEARCH_MOVIE -> moviesRepo.searchMovie(1, query)
+            else -> moviesRepo.getPopularMovie(1)
+        }
+    }
+
+    private fun getNextPageList(page: Int): Single<MovieResult> {
+        return when (movieType) {
+            Movie.NOW_PLAYING_MOVIE -> moviesRepo.getNowPlayingMovie(page)
+            SEARCH_MOVIE -> moviesRepo.searchMovie(page, query)
+            else -> moviesRepo.getPopularMovie(page)
+        }
     }
 
 }

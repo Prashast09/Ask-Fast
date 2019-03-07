@@ -9,23 +9,21 @@ import io.reactivex.Single
 class MoviesRepo {
 
 
-    private val service: RetrofitInstance =
-        RetrofitInstance.instance
-
+    private val service: RetrofitInstance = RetrofitInstance.instance
 
     fun getNowPlayingMovie(nowPlayingPage: Int): Single<MovieResult> {
-        return service?.tmdbApi.getNowPlayingMovies(BuildConfig.API_KEY, nowPlayingPage)!!
+        return service.tmdbApi.getNowPlayingMovies(BuildConfig.API_KEY, nowPlayingPage)!!
     }
 
     fun getPopularMovie(popularMoviePage: Int): Single<MovieResult> {
-        return service?.tmdbApi.getPopularMovies(BuildConfig.API_KEY, popularMoviePage)!!
+        return service.tmdbApi.getPopularMovies(BuildConfig.API_KEY, popularMoviePage)!!
     }
 
-    fun searchMovie(queryPage: Int,query : String): Single<MovieResult> {
-        return service?.tmdbApi.searchMovies(query, BuildConfig.API_KEY,queryPage)!!
+    fun searchMovie(queryPage: Int, query: String): Single<MovieResult> {
+        return service.tmdbApi.searchMovies(query, BuildConfig.API_KEY, queryPage)!!
     }
 
     fun getMovieDetail(movieId: Long): Single<Movie> {
-        return service?.tmdbApi.getMovieDetails(movieId, BuildConfig.API_KEY)!!
+        return service.tmdbApi.getMovieDetails(movieId, BuildConfig.API_KEY)!!
     }
 }
