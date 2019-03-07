@@ -27,6 +27,7 @@
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardElevation="16dp"
+                app:cardCornerRadius="6dp"
                 app:layout_constraintDimensionRatio="w,2:3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -49,7 +50,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
 
-                android:textColor="@color/colorAccent"
+                style="@style/ListPrimaryHeadingCombo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_poster"
                 app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -61,7 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_title"
             app:layout_constraintTop_toBottomOf="@+id/text_title"
@@ -94,8 +94,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="Release Date"
+                style="@style/SmallTitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/label_language"
+                app:layout_constraintStart_toEndOf="@+id/label_time"
                 app:layout_constraintTop_toBottomOf="@+id/text_release_date" />
 
         <TextView
@@ -103,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                style="@style/CardSubtitleHeading"
 
                 android:drawablePadding="8dp"
                 android:gravity="center"
@@ -119,7 +121,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="Viewer Rating"
-                app:layout_constraintEnd_toStartOf="@+id/label_language"
+                style="@style/SmallTitle"
+
+                app:layout_constraintEnd_toStartOf="@+id/label_time"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_vote"
@@ -129,6 +133,7 @@
                 android:id="@+id/text_vote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/CardSubtitleHeading"
 
                 android:drawablePadding="8dp"
                 android:gravity="center"
@@ -138,25 +143,27 @@
                 tools:text="7/10" />
 
         <TextView
-                android:id="@+id/label_language"
+                android:id="@+id/label_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Running Time"
+                style="@style/SmallTitle"
                 app:layout_constraintEnd_toStartOf="@+id/label_release_date"
                 app:layout_constraintStart_toEndOf="@+id/label_vote"
-                app:layout_constraintTop_toBottomOf="@+id/text_language" />
+                app:layout_constraintTop_toBottomOf="@+id/running_time" />
 
         <TextView
-                android:id="@+id/text_language"
+                android:id="@+id/running_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/label_language"
-                app:layout_constraintStart_toStartOf="@+id/label_language"
+                style="@style/CardSubtitleHeading"
+                app:layout_constraintEnd_toEndOf="@+id/label_time"
+                app:layout_constraintStart_toStartOf="@+id/label_time"
                 app:layout_constraintTop_toTopOf="@+id/text_vote"
-                tools:text="En" />
+                tools:text="120" />
 
         <View
                 android:id="@+id/view_divider_bottom"
@@ -175,6 +182,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:text="Overview"
+                style="@style/CardSubtitleHeading"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider_bottom" />
 
@@ -185,6 +194,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                style="@style/SmallTitle"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_overview"
@@ -197,6 +208,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:text="Casting"
+                style="@style/CardSubtitleHeading"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_overview"
                />

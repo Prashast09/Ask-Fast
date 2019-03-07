@@ -96,7 +96,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         text_overview.text = movie.overview
 
-        text_language.text = movie.runTime.toString() + " mins"
+        running_time.text = movie.runTime.toString() + " mins"
 
         setupCastAdapter(movie.creditsResponse)
 

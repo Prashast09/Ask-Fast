@@ -40,7 +40,6 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState.postValue(NetworkState("Loading page " + params.key, NetworkState.LOADING))
 
         getNextPageList(params.key).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

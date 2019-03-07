@@ -18,8 +18,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center"
                 android:maxLines="2"
+                style="@style/SmallTitle"
+                android:background="#89959b"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:background="@color/colorAccent"
                 tools:text="Real Name" />
 
         <TextView
@@ -28,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
+                style="@style/CardSubtitleHeading"
                 android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
