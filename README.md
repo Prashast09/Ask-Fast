@@ -15,5 +15,13 @@ They do not inherit any integlligence of underlying models. All we need to do is
 
 * **DataSource and Factory** :  Factory for all items shown in recyclerview and pagination handling for 3 types of sources
 
+##### Libraries Used
+* **Retrofit**
+* **Rx-Java**
+* **Jetpack Paginate**
+* **Jetpack LiveData**
+* **Espresso**
+* **Glide**
+
 
 
