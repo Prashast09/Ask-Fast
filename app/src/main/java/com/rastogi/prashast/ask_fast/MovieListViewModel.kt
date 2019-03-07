@@ -43,12 +43,12 @@ class MovieListViewModel() : ViewModel() {
 
     fun getNowPlayingMovies() {
         if (!::movieDataFactory.isInitialized)
-            movieDataFactory = MovieDataFactory(moviesRepo, "now_playing_movie")
+            movieDataFactory = MovieDataFactory(moviesRepo, Movie.NOW_PLAYING_MOVIE)
         else
-            movieDataFactory.setMovieType("now_playing_movie")
+            movieDataFactory.setMovieType(Movie.NOW_PLAYING_MOVIE)
 
         if (::nowPlayingMovie.isInitialized)
-           movieDataFactory.invalidate()
+            movieDataFactory.invalidate()
         networkState = Transformations.switchMap(movieDataFactory.mutableLiveData)
         { dataSource -> dataSource.networkState }
 
@@ -58,9 +58,9 @@ class MovieListViewModel() : ViewModel() {
 
     fun getPopularMovies() {
         if (!::movieDataFactory.isInitialized)
-        movieDataFactory = MovieDataFactory(moviesRepo, "popular_movies")
+            movieDataFactory = MovieDataFactory(moviesRepo, Movie.POPULAR_MOVIE)
         else
-            movieDataFactory.setMovieType("popular_movies")
+            movieDataFactory.setMovieType(Movie.POPULAR_MOVIE)
 
         if (::nowPlayingMovie.isInitialized)
             movieDataFactory.invalidate()
@@ -74,9 +74,9 @@ class MovieListViewModel() : ViewModel() {
 
     fun getSearchedMovies(it: String) {
         if (!::movieDataFactory.isInitialized)
-            movieDataFactory = MovieDataFactory(moviesRepo, "search_movies")
+            movieDataFactory = MovieDataFactory(moviesRepo, Movie.SEARCH_MOVIE)
         else
-            movieDataFactory.setMovieType("search_movies")
+            movieDataFactory.setMovieType(Movie.SEARCH_MOVIE)
 
         movieDataFactory.setQueryString(it)
 

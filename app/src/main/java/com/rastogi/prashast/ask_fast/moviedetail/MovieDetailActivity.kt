@@ -15,6 +15,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.rastogi.prashast.ask_fast.R
+import com.rastogi.prashast.ask_fast.UiUtils
 import com.rastogi.prashast.ask_fast.config.CreditsResponse
 import com.rastogi.prashast.ask_fast.config.Genre
 import com.rastogi.prashast.ask_fast.config.Movie
@@ -112,11 +113,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     fun setItems(view: ChipGroup, genres: List<Genre>?) {
-        if (genres == null
-            // Since we are using liveData to observe data, any changes in that table(favorites)
-            // will trigger the observer and hence rebinding data, which can lead to duplicates.
-            || view.childCount > 0
-        )
+        if (genres == null || view.childCount > 0)
             return
 
         // dynamically create & add genre chips
@@ -124,9 +121,9 @@ class MovieDetailActivity : AppCompatActivity() {
         for (genre in genres) {
             val chip = Chip(context)
             chip.text = genre.name
-//            chip.chipStrokeWidth = UiUtils.dipToPixels(context, 1)
+            chip.chipStrokeWidth = UiUtils.dipToPixels(context, 1f)
             chip.chipStrokeColor = ColorStateList.valueOf(
-                context.resources.getColor(R.color.abc_color_highlight_material)
+                context.resources.getColor(R.color.colorPrimary)
             )
             chip.setChipBackgroundColorResource(android.R.color.transparent)
             view.addView(chip)

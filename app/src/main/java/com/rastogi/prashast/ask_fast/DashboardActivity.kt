@@ -9,8 +9,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard_activity)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MovieListFragment.newInstance())
+            supportFragmentManager.beginTransaction().replace(R.id.container, MovieListFragment.newInstance())
                 .commitNow()
         }
     }

@@ -7,6 +7,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rastogi.prashast.ask_fast.config.Movie
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.movie_list_fragment.*
@@ -17,7 +18,7 @@ class MovieListFragment : androidx.fragment.app.Fragment(), MenuItem.OnActionExp
 
 
     private lateinit var movieListAdapter: MovieListAdapter
-    private var type : String = "now_playing_movie"
+    private var type: String = Movie.NOW_PLAYING_MOVIE
 
     companion object {
         fun newInstance() = MovieListFragment()
@@ -68,18 +69,16 @@ class MovieListFragment : androidx.fragment.app.Fragment(), MenuItem.OnActionExp
     }
 
     override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-        if(type == "now_playing_movie")
-            viewModel.getNowPlayingMovies()
-        else
-            viewModel.getPopularMovies()
         return true
     }
 
     override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-        viewModel.getNowPlayingMovies()
+        if (type == Movie.NOW_PLAYING_MOVIE)
+            viewModel.getNowPlayingMovies()
+        else if (type == Movie.POPULAR_MOVIE)
+            viewModel.getPopularMovies()
         return true
     }
-
 
 
     private fun intializeSearch(searchView: SearchView) {
@@ -95,10 +94,10 @@ class MovieListFragment : androidx.fragment.app.Fragment(), MenuItem.OnActionExp
         if (item.groupId == R.id.menu_sort_group) {
             if (item.itemId == R.id.now_playing_movie) {
                 viewModel.getNowPlayingMovies()
-                type = "now_playing_movie"
-            } else if(item.itemId == R.id.popular_movie){
+                type = Movie.NOW_PLAYING_MOVIE
+            } else if (item.itemId == R.id.popular_movie) {
                 viewModel.getPopularMovies()
-                type = "popular_movies"
+                type = Movie.POPULAR_MOVIE
             }
             item.isChecked = true
         }
