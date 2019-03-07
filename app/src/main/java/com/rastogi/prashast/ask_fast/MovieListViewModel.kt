@@ -21,17 +21,17 @@ class MovieListViewModel() : ViewModel() {
     var popularMovie = MutableLiveData<PagedList<Movie>>()
     var popularMovieError = MutableLiveData<Throwable>()
 
-    private var networkState: LiveData<NetworkState>? = null
+     var networkState: LiveData<NetworkState>? = null
 
 
-    var movieListRepo: MovieListRepo = MovieListRepo()
+    var moviesRepo: MoviesRepo = MoviesRepo()
     private var executor: Executor? = null
 
 
     init {
         executor = Executors.newFixedThreadPool(5)
 
-        val feedDataFactory = MovieDataFactory(movieListRepo)
+        val feedDataFactory = MovieDataFactory(moviesRepo)
         networkState = Transformations.switchMap(feedDataFactory.mutableLiveData)
         { dataSource -> dataSource.networkState }
 

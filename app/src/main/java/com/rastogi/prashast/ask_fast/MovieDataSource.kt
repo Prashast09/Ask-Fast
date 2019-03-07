@@ -8,7 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @SuppressLint("CheckResult")
-class MovieDataSource(val movieListRepo: MovieListRepo) : PageKeyedDataSource<Int, Movie>() {
+class MovieDataSource(val moviesRepo: MoviesRepo) : PageKeyedDataSource<Int, Movie>() {
 
 
     var networkState = MutableLiveData<NetworkState>()
@@ -16,7 +16,7 @@ class MovieDataSource(val movieListRepo: MovieListRepo) : PageKeyedDataSource<In
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
         networkState?.postValue(NetworkState("Loading", NetworkState.LOADING))
-        movieListRepo.getNowPlayingMovie(1)
+        moviesRepo.getNowPlayingMovie(1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -37,7 +37,7 @@ class MovieDataSource(val movieListRepo: MovieListRepo) : PageKeyedDataSource<In
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         networkState?.postValue(NetworkState("Loading",NetworkState.LOADING))
 
-        movieListRepo.getNowPlayingMovie(params.key)
+        moviesRepo.getNowPlayingMovie(params.key)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

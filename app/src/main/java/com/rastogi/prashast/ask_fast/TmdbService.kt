@@ -15,15 +15,15 @@ interface TmdbService {
         @Query("page") page: Int
     ): Single<MovieResult>?
 
-    @GET("/movie/popular")
+    @GET("movie/popular")
     fun getPopularMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int
     ): Single<MovieResult>?
 
-    @GET("/movie/{movie_id}")
+    @GET("movie/{movie_id}?append_to_response=credits")
     fun getMovieDetails(
-        @Path("movie_id") movieId: String,
+        @Path("movie_id") movieId: Long,
         @Query("api_key") apiKey: String
     ): Single<Movie>?
 

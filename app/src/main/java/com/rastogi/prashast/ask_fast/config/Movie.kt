@@ -12,16 +12,33 @@ class Movie {
     var rating: Float? = null
 
 
-    @SerializedName("backdrop_path")
+    @SerializedName("poster_path")
     var posterPath: String? = null
 
     @SerializedName("id")
-    var id: Int? = null
+    var id: Long? = null
+
+    @SerializedName("backdrop_path")
+     var backdropPath: String? = null
+
+    @SerializedName("genres")
+     var genres: List<Genre>? = null
+
+    @SerializedName("release_date")
+     var releaseDate: String? = null
+
+    @SerializedName("overview")
+     var overview: String? = null
+
+    @SerializedName("runtime")
+     var runTime: Int? = null
+
+    @SerializedName("credits")
+     var creditsResponse: CreditsResponse? = null
 
     companion object {
 
-
-        public var DIFF_CALLBACK: DiffUtil.ItemCallback<Movie> = object : DiffUtil.ItemCallback<Movie>() {
+        var DIFF_CALLBACK: DiffUtil.ItemCallback<Movie> = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem.id == newItem.id
             }
