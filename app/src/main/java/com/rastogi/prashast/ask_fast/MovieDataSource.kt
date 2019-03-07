@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.rastogi.prashast.ask_fast.config.Movie
+import com.rastogi.prashast.ask_fast.config.MovieResult
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @SuppressLint("CheckResult")
-class MovieDataSource(val moviesRepo: MoviesRepo) : PageKeyedDataSource<Int, Movie>() {
+class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String) : PageKeyedDataSource<Int, Movie>() {
+
+    public val NOW_PLAYING_MOVIE = "now_playing_movie"
 
 
     var networkState = MutableLiveData<NetworkState>()
@@ -16,8 +20,13 @@ class MovieDataSource(val moviesRepo: MoviesRepo) : PageKeyedDataSource<Int, Mov
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
         networkState?.postValue(NetworkState("Loading", NetworkState.LOADING))
-        moviesRepo.getNowPlayingMovie(1)
-            .subscribeOn(Schedulers.io())
+
+        val movieList: Single<MovieResult> = if (movieType == NOW_PLAYING_MOVIE)
+            moviesRepo.getNowPlayingMovie(1)
+        else {
+            moviesRepo.getPopularMovie(1)
+        }
+        movieList.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 callback.onResult(it.movieList!!, null, 2)
@@ -35,10 +44,14 @@ class MovieDataSource(val moviesRepo: MoviesRepo) : PageKeyedDataSource<Int, Mov
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState?.postValue(NetworkState("Loading",NetworkState.LOADING))
+        networkState?.postValue(NetworkState("Loading", NetworkState.LOADING))
+        val movieList: Single<MovieResult> = if (movieType == NOW_PLAYING_MOVIE)
+            moviesRepo.getNowPlayingMovie(params.key)
+        else {
+            moviesRepo.getPopularMovie(params.key)
+        }
 
-        moviesRepo.getNowPlayingMovie(params.key)
-            .subscribeOn(Schedulers.io())
+        movieList.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 val nextKey = if (params.key === it.totalPages)

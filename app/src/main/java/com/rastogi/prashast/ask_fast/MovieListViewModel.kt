@@ -21,26 +21,60 @@ class MovieListViewModel() : ViewModel() {
     var popularMovie = MutableLiveData<PagedList<Movie>>()
     var popularMovieError = MutableLiveData<Throwable>()
 
-     var networkState: LiveData<NetworkState>? = null
+    var networkState: LiveData<NetworkState>? = null
 
 
     var moviesRepo: MoviesRepo = MoviesRepo()
     private var executor: Executor? = null
+    private lateinit var pagedListConfig: PagedList.Config
+    private lateinit var movieDataFactory: MovieDataFactory
 
 
     init {
         executor = Executors.newFixedThreadPool(5)
 
-        val feedDataFactory = MovieDataFactory(moviesRepo)
-        networkState = Transformations.switchMap(feedDataFactory.mutableLiveData)
-        { dataSource -> dataSource.networkState }
 
-        val pagedListConfig = PagedList.Config.Builder()
+        pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(10)
             .setPageSize(20).build()
 
-        nowPlayingMovie = LivePagedListBuilder(feedDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
+        getNowPlayingMovies()
+
+
+    }
+
+    fun getNowPlayingMovies() {
+        if (!::movieDataFactory.isInitialized)
+            movieDataFactory = MovieDataFactory(moviesRepo, "now_playing_movie")
+        else
+            movieDataFactory.setMovieType("now_playing_movie")
+
+        if (::nowPlayingMovie.isInitialized)
+           movieDataFactory.invalidate()
+        networkState = Transformations.switchMap(movieDataFactory.mutableLiveData)
+        { dataSource -> dataSource.networkState }
+
+        nowPlayingMovie = LivePagedListBuilder(movieDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
+        nowPlayingMovie.value?.dataSource?.removeInvalidatedCallback {  }
+
+    }
+
+    fun getPopularMovies() {
+        if (!::movieDataFactory.isInitialized)
+        movieDataFactory = MovieDataFactory(moviesRepo, "popular_movies")
+        else
+            movieDataFactory.setMovieType("popular_movies")
+
+        if (::nowPlayingMovie.isInitialized)
+            movieDataFactory.invalidate()
+
+        networkState = Transformations.switchMap(movieDataFactory.mutableLiveData)
+        { dataSource -> dataSource.networkState }
+
+        nowPlayingMovie = LivePagedListBuilder(movieDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
+        nowPlayingMovie.value?.dataSource?.removeInvalidatedCallback {  }
+
     }
 
 

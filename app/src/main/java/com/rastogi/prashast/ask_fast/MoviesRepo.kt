@@ -14,9 +14,9 @@ class MoviesRepo {
         return service?.tmdbApi.getNowPlayingMovies(BuildConfig.API_KEY, nowPlayingPage)!!
     }
 
-//    fun getPopularMovie(): Single<MovieResult> {
-//        return service?.tmdbApi.getPopularMovies(BuildConfig.API_KEY, popularMoviesPage)!!
-//    }
+    fun getPopularMovie(popularMoviePage: Int): Single<MovieResult> {
+        return service?.tmdbApi.getPopularMovies(BuildConfig.API_KEY, popularMoviePage)!!
+    }
 
     fun getMovieDetail(movieId: Long): Single<Movie> {
         return service?.tmdbApi.getMovieDetails(movieId, BuildConfig.API_KEY)!!
