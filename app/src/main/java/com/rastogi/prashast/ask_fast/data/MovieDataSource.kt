@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.data
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,8 @@ import androidx.paging.PageKeyedDataSource
 import com.rastogi.prashast.ask_fast.config.Movie
 import com.rastogi.prashast.ask_fast.config.Movie.Companion.SEARCH_MOVIE
 import com.rastogi.prashast.ask_fast.config.MovieResult
+import com.rastogi.prashast.ask_fast.config.NetworkState
+import com.rastogi.prashast.ask_fast.repo.MoviesRepo
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,7 +21,12 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
 
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
-        networkState.postValue(NetworkState("Loading", NetworkState.LOADING))
+        networkState.postValue(
+            NetworkState(
+                "Loading",
+                NetworkState.LOADING
+            )
+        )
 
         val movieList: Single<MovieResult> =
             when (movieType) {
@@ -31,7 +38,12 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 callback.onResult(it.movieList!!, null, 2)
-                networkState.postValue(NetworkState("Loaded", NetworkState.LOADED))
+                networkState.postValue(
+                    NetworkState(
+                        "Loaded",
+                        NetworkState.LOADED
+                    )
+                )
             }, {
                 networkState.postValue(
                     NetworkState(
@@ -45,7 +57,12 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var que
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState.postValue(NetworkState("Loading", NetworkState.LOADING))
+        networkState.postValue(
+            NetworkState(
+                "Loading",
+                NetworkState.LOADING
+            )
+        )
 
         val movieList: Single<MovieResult> = when (movieType) {
             Movie.NOW_PLAYING_MOVIE -> moviesRepo.getNowPlayingMovie(params.key)

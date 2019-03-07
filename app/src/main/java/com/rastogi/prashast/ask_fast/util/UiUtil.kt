@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.util
 
 import android.content.Context
 import android.util.TypedValue

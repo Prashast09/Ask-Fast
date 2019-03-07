@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import com.rastogi.prashast.ask_fast.ui.DashboardActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

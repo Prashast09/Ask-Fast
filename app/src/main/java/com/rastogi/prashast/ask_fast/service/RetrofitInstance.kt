@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.service
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,7 +40,8 @@ class RetrofitInstance {
         val instance: RetrofitInstance
             get() {
                 if (mInstance == null) {
-                    mInstance = RetrofitInstance()
+                    mInstance =
+                            RetrofitInstance()
                 }
                 return mInstance!!
             }

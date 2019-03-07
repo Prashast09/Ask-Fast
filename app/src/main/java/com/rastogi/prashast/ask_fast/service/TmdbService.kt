@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.service
 
 import com.rastogi.prashast.ask_fast.config.Movie
 import com.rastogi.prashast.ask_fast.config.MovieResult

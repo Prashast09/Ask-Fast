@@ -1,8 +1,9 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.rastogi.prashast.ask_fast.config.Movie
+import com.rastogi.prashast.ask_fast.repo.MoviesRepo
 
 
 class MovieDataFactory(

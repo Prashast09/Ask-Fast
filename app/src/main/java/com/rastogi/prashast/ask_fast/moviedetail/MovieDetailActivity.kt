@@ -15,7 +15,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.rastogi.prashast.ask_fast.R
-import com.rastogi.prashast.ask_fast.UiUtils
+import com.rastogi.prashast.ask_fast.util.UiUtils
 import com.rastogi.prashast.ask_fast.config.CreditsResponse
 import com.rastogi.prashast.ask_fast.config.Genre
 import com.rastogi.prashast.ask_fast.config.Movie

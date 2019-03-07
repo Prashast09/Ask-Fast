@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.movielist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import com.bumptech.glide.Glide
+import com.rastogi.prashast.ask_fast.R
 import com.rastogi.prashast.ask_fast.config.Movie
 import com.rastogi.prashast.ask_fast.moviedetail.MovieDetailActivity
 

@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.movielist
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
@@ -7,7 +7,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.rastogi.prashast.ask_fast.data.MovieDataFactory
+import com.rastogi.prashast.ask_fast.repo.MoviesRepo
 import com.rastogi.prashast.ask_fast.config.Movie
+import com.rastogi.prashast.ask_fast.config.NetworkState
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 

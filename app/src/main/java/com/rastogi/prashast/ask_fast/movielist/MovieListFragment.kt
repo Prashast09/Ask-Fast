@@ -1,4 +1,4 @@
-package com.rastogi.prashast.ask_fast
+package com.rastogi.prashast.ask_fast.movielist
 
 import android.os.Bundle
 import android.view.*
@@ -7,6 +7,8 @@ import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rastogi.prashast.ask_fast.R
+import com.rastogi.prashast.ask_fast.util.UiUtils
 import com.rastogi.prashast.ask_fast.config.Movie
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -56,7 +58,11 @@ class MovieListFragment : androidx.fragment.app.Fragment(), MenuItem.OnActionExp
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main, menu)
-        UiUtils.tintMenuIcon(context!!, menu.findItem(R.id.action_sort_by), R.color.md_white_1000)
+        UiUtils.tintMenuIcon(
+            context!!,
+            menu.findItem(R.id.action_sort_by),
+            R.color.md_white_1000
+        )
         initSearchView(menu)
 
     }
