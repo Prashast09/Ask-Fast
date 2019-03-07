@@ -57,6 +57,7 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
+
     private fun handleCollapsedToolbarTitle() {
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             internal var isShow = true
