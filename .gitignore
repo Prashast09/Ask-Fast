@@ -9,3 +9,24 @@
 /build
 /captures
 .externalNativeBuild
+
+.gradle
+/.idea/workspace.xml
+/.idea/libraries
+.idea/caches/
+.idea/codeStyles/codeStyleConfig.xml
+.DS_Store
+/build
+
+#remove studio files
+*.iml
+.idea/*.xml
+
+# ignore apk files
+app/prod/
+app/dev/
+.idea/caches/
+.idea/codeStyles/
+.idea/copyright/
+.idea/dictionaries/
+captures/
