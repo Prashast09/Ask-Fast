@@ -27,4 +27,11 @@ interface TmdbService {
         @Query("api_key") apiKey: String
     ): Single<Movie>?
 
+    @GET("search/movie")
+    fun searchMovies(
+        @Query("query") query: String,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Single<MovieResult>?
+
 }

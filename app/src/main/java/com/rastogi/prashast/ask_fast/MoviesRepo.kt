@@ -18,6 +18,10 @@ class MoviesRepo {
         return service?.tmdbApi.getPopularMovies(BuildConfig.API_KEY, popularMoviePage)!!
     }
 
+    fun searchMovie(queryPage: Int,query : String): Single<MovieResult> {
+        return service?.tmdbApi.searchMovies(query, BuildConfig.API_KEY,queryPage)!!
+    }
+
     fun getMovieDetail(movieId: Long): Single<Movie> {
         return service?.tmdbApi.getMovieDetails(movieId, BuildConfig.API_KEY)!!
     }

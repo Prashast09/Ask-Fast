@@ -18,15 +18,12 @@ class MovieListViewModel() : ViewModel() {
     lateinit var nowPlayingMovie: LiveData<PagedList<Movie>>
     var nowPlayingError = MutableLiveData<Throwable>()
 
-    var popularMovie = MutableLiveData<PagedList<Movie>>()
-    var popularMovieError = MutableLiveData<Throwable>()
-
     var networkState: LiveData<NetworkState>? = null
 
 
     var moviesRepo: MoviesRepo = MoviesRepo()
     private var executor: Executor? = null
-    private lateinit var pagedListConfig: PagedList.Config
+    private var pagedListConfig: PagedList.Config
     private lateinit var movieDataFactory: MovieDataFactory
 
 
@@ -56,7 +53,6 @@ class MovieListViewModel() : ViewModel() {
         { dataSource -> dataSource.networkState }
 
         nowPlayingMovie = LivePagedListBuilder(movieDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
-        nowPlayingMovie.value?.dataSource?.removeInvalidatedCallback {  }
 
     }
 
@@ -73,8 +69,24 @@ class MovieListViewModel() : ViewModel() {
         { dataSource -> dataSource.networkState }
 
         nowPlayingMovie = LivePagedListBuilder(movieDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
-        nowPlayingMovie.value?.dataSource?.removeInvalidatedCallback {  }
 
+    }
+
+    fun getSearchedMovies(it: String) {
+        if (!::movieDataFactory.isInitialized)
+            movieDataFactory = MovieDataFactory(moviesRepo, "search_movies")
+        else
+            movieDataFactory.setMovieType("search_movies")
+
+        movieDataFactory.setQueryString(it)
+
+        if (::nowPlayingMovie.isInitialized)
+            movieDataFactory.invalidate()
+
+        networkState = Transformations.switchMap(movieDataFactory.mutableLiveData)
+        { dataSource -> dataSource.networkState }
+
+        nowPlayingMovie = LivePagedListBuilder(movieDataFactory, pagedListConfig).setFetchExecutor(executor!!).build()
     }
 
 

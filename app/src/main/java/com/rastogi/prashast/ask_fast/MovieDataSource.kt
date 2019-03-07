@@ -10,9 +10,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 @SuppressLint("CheckResult")
-class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String) : PageKeyedDataSource<Int, Movie>() {
+class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String, var query: String) :
+    PageKeyedDataSource<Int, Movie>() {
 
     public val NOW_PLAYING_MOVIE = "now_playing_movie"
+    public val SEARCH_MOVIE = "search_movies"
 
 
     var networkState = MutableLiveData<NetworkState>()
@@ -23,7 +25,9 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String) : PageK
 
         val movieList: Single<MovieResult> = if (movieType == NOW_PLAYING_MOVIE)
             moviesRepo.getNowPlayingMovie(1)
-        else {
+        else if (movieType == SEARCH_MOVIE) {
+            moviesRepo.searchMovie(1, query)
+        } else {
             moviesRepo.getPopularMovie(1)
         }
         movieList.subscribeOn(Schedulers.io())
@@ -47,7 +51,9 @@ class MovieDataSource(val moviesRepo: MoviesRepo, var movieType: String) : PageK
         networkState?.postValue(NetworkState("Loading", NetworkState.LOADING))
         val movieList: Single<MovieResult> = if (movieType == NOW_PLAYING_MOVIE)
             moviesRepo.getNowPlayingMovie(params.key)
-        else {
+        else if (movieType == SEARCH_MOVIE) {
+            moviesRepo.searchMovie(params.key, query)
+        } else {
             moviesRepo.getPopularMovie(params.key)
         }
 
