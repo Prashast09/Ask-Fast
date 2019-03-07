@@ -60,5 +60,15 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
 
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    // Espresso
+// Core library
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+// AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
+
 
 }
