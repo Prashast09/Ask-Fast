@@ -13,9 +13,11 @@ import kotlinx.android.synthetic.main.movie_list_fragment.*
 import java.util.concurrent.TimeUnit
 
 
-class MovieListFragment : androidx.fragment.app.Fragment() {
+class MovieListFragment : androidx.fragment.app.Fragment(), MenuItem.OnActionExpandListener {
+
 
     private lateinit var movieListAdapter: MovieListAdapter
+    private var type : String = "now_playing_movie"
 
     companion object {
         fun newInstance() = MovieListFragment()
@@ -52,10 +54,8 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-
         inflater.inflate(R.menu.main, menu)
         UiUtils.tintMenuIcon(context!!, menu.findItem(R.id.action_sort_by), R.color.md_white_1000)
-
         initSearchView(menu)
 
     }
@@ -64,7 +64,23 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
         intializeSearch(searchView)
+        searchItem.setOnActionExpandListener(this)
     }
+
+    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+        if(type == "now_playing_movie")
+            viewModel.getNowPlayingMovies()
+        else
+            viewModel.getPopularMovies()
+        return true
+    }
+
+    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+        viewModel.getNowPlayingMovies()
+        return true
+    }
+
+
 
     private fun intializeSearch(searchView: SearchView) {
         RxSearchObservable.fromView(searchView)
@@ -75,13 +91,14 @@ class MovieListFragment : androidx.fragment.app.Fragment() {
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.menu_sort_group) {
             if (item.itemId == R.id.now_playing_movie) {
                 viewModel.getNowPlayingMovies()
-            } else {
+                type = "now_playing_movie"
+            } else if(item.itemId == R.id.popular_movie){
                 viewModel.getPopularMovies()
+                type = "popular_movies"
             }
             item.isChecked = true
         }
