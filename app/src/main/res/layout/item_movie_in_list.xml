@@ -48,7 +48,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:id="@+id/rating_ll"
-                android:background="@color/gray_100"
+                android:background="@color/md_white_1000"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
