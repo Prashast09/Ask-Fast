@@ -12,7 +12,7 @@ class DashboardActivity : AppCompatActivity() {
         init(savedInstanceState)
     }
 
-    private fun init(savedInstanceState: Bundle?) {
+    fun init(savedInstanceState: Bundle?) {
         setContentView(R.layout.dashboard_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(R.id.container, MovieListFragment.newInstance())
