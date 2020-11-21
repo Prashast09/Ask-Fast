@@ -9,10 +9,14 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init(savedInstanceState)
+    }
+
+    private fun init(savedInstanceState: Bundle?) {
         setContentView(R.layout.dashboard_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(R.id.container, MovieListFragment.newInstance())
-                .commitNow()
+                    .commitNow()
         }
     }
 
